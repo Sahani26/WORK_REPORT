@@ -40,7 +40,7 @@ const TaskForm = ({ onAdd }) => {
         <option value="in-progress">In-progress</option>
         <option value="completed">Completed</option>
       </select>
-      <button type="submit">Add Task</button>
+      <button type="submit">Add  Task</button>
     </form>
   );
 };
