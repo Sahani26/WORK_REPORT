@@ -1,0 +1,5 @@
+body { font-family: Arial, Helvetica, sans-serif; background: #f5f5f5; margin:0; padding:20px; }
+.container { max-width:900px; margin:0 auto; background:white; padding:20px; border-radius:8px; }
+.task-form input, .task-form textarea { display:block; width:100%; margin-bottom:8px; padding:8px; }
+.task-item { border:1px solid #ddd; padding:12px; margin-bottom:8px; border-radius:6px; }
+.actions button { margin-right:8px; }

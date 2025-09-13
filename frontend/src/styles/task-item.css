@@ -1,0 +1,88 @@
+.task-item {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.task-item h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: #333;
+}
+
+.task-item p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.task-item em {
+  color: #777;
+}
+
+.task-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.task-actions button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.task-actions button:first-child {
+  background: #0077ff;
+  color: white;
+}
+
+.task-actions button:first-child:hover {
+  background: #005ecb;
+  transform: scale(1.05);
+}
+
+.task-actions button:last-child {
+  background: #ff4d4d;
+  color: white;
+}
+
+.task-actions button:last-child:hover {
+  background: #d93636;
+  transform: scale(1.05);
+}
+
+/* Status badge */
+.status-badge {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  background: #ffe082;
+  color: #7c5e00;
+}
+
+.status-badge.in-progress {
+  background: #82b1ff;
+  color: #003c8f;
+}
+
+.status-badge.completed {
+  background: #81c784;
+  color: #1b5e20;
+}

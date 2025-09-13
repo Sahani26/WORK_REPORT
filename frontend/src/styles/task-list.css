@@ -1,0 +1,20 @@
+.task-list-header {
+  font-size: 22px;
+  margin: 16px 0 8px;
+  color: #0077ff;
+  border-left: 4px solid #0077ff;
+  padding-left: 10px;
+}
+
+.task-summary {
+  font-size: 14px;
+  margin-bottom: 16px;
+  color: #444;
+}
+
+.no-tasks {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+  margin-top: 20px;
+}
