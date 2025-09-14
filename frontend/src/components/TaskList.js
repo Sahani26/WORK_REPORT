@@ -2,20 +2,18 @@ import React, { useState } from 'react';
 import TaskItem from './TaskItem';
 import '../styles/task-list.css';
 
-const TaskList = ({ tasks, onUpdate, onDelete }) => {
-  const [quickFilter, setQuickFilter] = useState('all'); // all, today, yesterday, custom
+const TaskList = ({ tasks, onUpdate, onDelete, actionsEnabled, mode }) => {
+  const [quickFilter, setQuickFilter] = useState('all'); // all | today | yesterday | custom
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  // Helper dates
   const today = new Date();
   const yesterday = new Date();
   yesterday.setDate(today.getDate() - 1);
 
-  // Filter tasks based on quickFilter & custom dates
+  // ✅ Date filtering logic
   const filteredTasks = tasks.filter(task => {
     if (!task.createdAt) return true;
-
     const taskDate = new Date(task.createdAt);
 
     if (quickFilter === 'today') {
@@ -24,14 +22,12 @@ const TaskList = ({ tasks, onUpdate, onDelete }) => {
       return taskDate.toDateString() === yesterday.toDateString();
     } else if (quickFilter === 'custom') {
       if (startDate && taskDate < new Date(startDate)) return false;
-      if (endDate && taskDate > new Date(endDate + 'T23:59:59')) return false;
+      if (endDate && taskDate > new Date(endDate + "T23:59:59")) return false;
       return true;
     }
-
-    return true; // all
+    return true; // default (all)
   });
 
-  // Count summary
   const total = filteredTasks.length;
   const pending = filteredTasks.filter(t => t.status === 'pending').length;
   const inProgress = filteredTasks.filter(t => t.status === 'in-progress').length;
@@ -41,45 +37,39 @@ const TaskList = ({ tasks, onUpdate, onDelete }) => {
     <div className="task-list">
       <h2 className="task-list-header">📋 Task List</h2>
 
-      {/* Quick Filter Buttons */}
+      {/* 🔹 Quick Filters */}
       <div className="quick-filter">
-        <button onClick={() => setQuickFilter('today')}>Today</button>
-        <button onClick={() => setQuickFilter('yesterday')}>Yesterday</button>
-        <button onClick={() => setQuickFilter('custom')}>Custom</button>
-        <button onClick={() => { setQuickFilter('all'); setStartDate(''); setEndDate(''); }}>All</button>
+        <button onClick={() => setQuickFilter('today')} className={quickFilter === 'today' ? 'active' : ''}>Today</button>
+        <button onClick={() => setQuickFilter('yesterday')} className={quickFilter === 'yesterday' ? 'active' : ''}>Yesterday</button>
+        <button onClick={() => setQuickFilter('custom')} className={quickFilter === 'custom' ? 'active' : ''}>Custom</button>
+        <button onClick={() => { setQuickFilter('all'); setStartDate(''); setEndDate(''); }} className={quickFilter === 'all' ? 'active' : ''}>All</button>
       </div>
 
-      {/* Custom Date Picker */}
+      {/* 🔹 Custom Date Range */}
       {quickFilter === 'custom' && (
         <div className="date-picker">
-          <label>Start Date: </label>
-          <input
-            type="date"
-            value={startDate}
-            onChange={e => setStartDate(e.target.value)}
-          />
-          <label>End Date: </label>
-          <input
-            type="date"
-            value={endDate}
-            onChange={e => setEndDate(e.target.value)}
-          />
+          <label>Start Date:</label>
+          <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
+          <label>End Date:</label>
+          <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} />
         </div>
       )}
 
+      {/* 🔹 Task Summary */}
       <p className="task-summary">
-        Total: <strong>{total}</strong> | 
-        Pending: <strong>{pending}</strong> | 
-        In-progress: <strong>{inProgress}</strong> | 
-        Completed: <strong>{completed}</strong>
+        Total: <strong>{total}</strong> | Pending: <strong>{pending}</strong> | 
+        In-progress: <strong>{inProgress}</strong> | Completed: <strong>{completed}</strong>
       </p>
 
+      {/* 🔹 Task Items */}
       {filteredTasks.map(task => (
-        <TaskItem
-          key={task._id}
-          task={task}
-          onUpdate={onUpdate}
-          onDelete={onDelete}
+        <TaskItem 
+          key={task._id} 
+          task={task} 
+          onUpdate={onUpdate} 
+          onDelete={onDelete} 
+          actionsEnabled={actionsEnabled} 
+          mode={mode}
         />
       ))}
     </div>

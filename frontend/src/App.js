@@ -1,37 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import TaskForm from './components/TaskForm';
-import TaskList from './components/TaskList';
-import api from './utils/api';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
+import TaskListPage from "./pages/TaskListPage"; // 👈 New page
+import api from "./utils/api";
+import "./styles/app.css";
 
-function App() {
+const App = () => {
   const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [pageMode, setPageMode] = useState("work"); // work | personal
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   const fetchTasks = async () => {
     try {
-      const res = await api.get('/tasks');
+      const res = await api.get("/tasks");
       setTasks(res.data);
     } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
+      console.error("❌ Error fetching tasks:", err);
     }
   };
 
-  useEffect(() => { fetchTasks(); }, []);
-
-  const addTask = (task) => setTasks(prev => [task, ...prev]);
-  const updateTask = (updated) => setTasks(prev => prev.map(t => t._id === updated._id ? updated : t));
-  const removeTask = (id) => setTasks(prev => prev.filter(t => t._id !== id));
+  const addTask = (task) => setTasks([task, ...tasks]);
+  const updateTask = (updated) =>
+    setTasks(tasks.map((t) => (t._id === updated._id ? updated : t)));
+  const deleteTask = (id) => setTasks(tasks.filter((t) => t._id !== id));
 
   return (
-    <div className="container">
-      <h1>MERN Task Manager</h1>
-      <TaskForm onAdd={addTask} />
-      {loading ? <p>Loading tasks...</p> : <TaskList tasks={tasks} onUpdate={updateTask} onDelete={removeTask} />}
-    </div>
+    <Router>
+      <div className="app-container">
+        <h1>📊 Work Report</h1>
+
+        {/* 🔗 Navigation */}
+        <nav className="nav-links">
+          <Link to="/">➕ Add Task</Link>
+          <Link to="/tasks">📋 Task List</Link>
+        </nav>
+
+        <Routes>
+          {/* ➕ Add Task Page */}
+          <Route
+            path="/"
+            element={
+              <>
+                {/* Work / Personal Toggle */}
+                <div className="page-mode-toggle">
+                  <button
+                    onClick={() => setPageMode("work")}
+                    className={pageMode === "work" ? "active" : ""}
+                  >
+                    🏢 Work
+                  </button>
+                  <button
+                    onClick={() => setPageMode("personal")}
+                    className={pageMode === "personal" ? "active" : ""}
+                  >
+                    🏠 Personal
+                  </button>
+                </div>
+
+                {/* Task Form (auto-assigns mode) */}
+                <TaskForm onAdd={addTask} defaultMode={pageMode} />
+
+                {/* Task List (filtered by mode) */}
+                <TaskList
+                  tasks={tasks.filter((t) => t.mode === pageMode)}
+                  onUpdate={updateTask}
+                  onDelete={deleteTask}
+                />
+              </>
+            }
+          />
+
+          {/* 📋 Task List Page with filters */}
+          <Route
+            path="/tasks"
+            element={<TaskListPage />}
+          />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

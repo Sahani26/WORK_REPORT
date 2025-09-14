@@ -1,20 +1,330 @@
+/* 🔹 Task List Container */
+.task-list {
+  max-width: 750px;
+  margin: 20px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
 .task-list-header {
-  font-size: 22px;
-  margin: 16px 0 8px;
-  color: #0077ff;
-  border-left: 4px solid #0077ff;
-  padding-left: 10px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .task-summary {
-  font-size: 14px;
-  margin-bottom: 16px;
-  color: #444;
+  font-size: 0.95rem;
+  color: #555;
+  margin: 15px 0;
+  text-align: center;
 }
 
-.no-tasks {
-  text-align: center;
-  font-style: italic;
-  color: #777;
-  margin-top: 20px;
+/* 🔹 Mode Toggle (Work / Personal) */
+.mode-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.mode-toggle button {
+  padding: 8px 18px;
+  border-radius: 30px;
+  border: none;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mode-toggle button.active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
+}
+
+.mode-toggle button:hover {
+  background: #e5e7eb;
+}
+
+/* 🔹 Quick Filter Buttons */
+.quick-filter {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.quick-filter button {
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: none;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quick-filter button:hover {
+  background: #e5e7eb;
+}
+
+.quick-filter button.active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
+}
+
+/* 🔹 Date Picker */
+.date-picker {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+  margin: 10px 0 20px;
+  flex-wrap: wrap;
+}
+
+.date-picker label {
+  font-weight: 500;
+  color: #374151;
+}
+
+.date-picker input {
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: border 0.2s;
+}
+
+.date-picker input:focus {
+  outline: none;
+  border: 1px solid #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.3);
+}
+
+/* 🔹 Task Item Card */
+.task-item {
+  background: #fafafa;
+  padding: 16px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.task-item h3 {
+  font-size: 1.2rem;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.task-item p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+/* 🔹 Status Badge */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.in-progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-badge.completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+/* 🔹 Task Actions */
+.task-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.task-actions button {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.task-actions button:first-child {
+  background: #3b82f6;
+  color: white;
+}
+
+.task-actions button:first-child:hover {
+  background: #2563eb;
+}
+
+.task-actions button:last-child {
+  background: #ef4444;
+  color: white;
+}
+
+.task-actions button:last-child:hover {
+  background: #dc2626;
+}
+
+/* 🔹 Responsive */
+@media (max-width: 600px) {
+  .task-list {
+    padding: 18px;
+  }
+
+  .quick-filter {
+    gap: 8px;
+  }
+
+  .quick-filter button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .task-item h3 {
+    font-size: 1rem;
+  }
+
+  .mode-toggle {
+    gap: 8px;
+  }
+
+  .mode-toggle button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  
+}
+/* 🔹 Toggle Edit Mode Button */
+.toggle-actions-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-actions-btn:hover {
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+/* 🔹 Optional: smaller on mobile */
+@media (max-width: 600px) {
+  .toggle-actions-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+.task-list-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Header menus */
+.header-menus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  transition: max-height 0.3s ease;
+}
+
+.header-menus button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.header-menus button.active {
+  background: #007bff;
+  color: white;
+}
+
+.date-picker {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: -3px;
+    right: 15px;
+  }
+
+  .header-menus {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-height: 0;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .header-menus.open {
+    max-height: 1000px; /* enough to show all content */
+  }
 }

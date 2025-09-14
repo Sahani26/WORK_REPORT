@@ -1,33 +1,55 @@
 .task-item {
-  background: white;
-  border-radius: 14px;
+  background: #f9fafb;
+  border: 1px solid #eee;
   padding: 18px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  text-align: left;
+  transition: 0.3s ease;
 }
 
 .task-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.08);
 }
 
 .task-item h3 {
-  margin: 0 0 6px;
-  font-size: 18px;
+  margin: 0 0 10px;
+  font-size: 1.1rem;
   color: #333;
 }
 
 .task-item p {
   margin: 4px 0;
-  font-size: 14px;
-  color: #555;
+  font-size: 0.9rem;
+  color: #444;
 }
 
-.task-item em {
-  color: #777;
+/* Status Badge */
+.status-badge {
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
+.status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.in-progress {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-badge.completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* Action buttons */
 .task-actions {
   margin-top: 12px;
   display: flex;
@@ -35,54 +57,29 @@
 }
 
 .task-actions button {
-  padding: 6px 12px;
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s, transform 0.2s;
+  font-size: 0.9rem;
+  transition: 0.2s ease;
 }
 
 .task-actions button:first-child {
-  background: #0077ff;
+  background: #6366f1;
   color: white;
 }
 
 .task-actions button:first-child:hover {
-  background: #005ecb;
-  transform: scale(1.05);
+  background: #4f46e5;
 }
 
 .task-actions button:last-child {
-  background: #ff4d4d;
+  background: #f87171;
   color: white;
 }
 
 .task-actions button:last-child:hover {
-  background: #d93636;
-  transform: scale(1.05);
-}
-
-/* Status badge */
-.status-badge {
-  padding: 3px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-
-.status-badge.pending {
-  background: #ffe082;
-  color: #7c5e00;
-}
-
-.status-badge.in-progress {
-  background: #82b1ff;
-  color: #003c8f;
-}
-
-.status-badge.completed {
-  background: #81c784;
-  color: #1b5e20;
+  background: #dc2626;
 }
