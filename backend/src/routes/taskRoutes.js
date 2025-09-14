@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../models/Task');
 
+// ✅ Test route for deployment success
+router.get('/test', (req, res) => {
+  res.json({ message: '✅ Backend deployed successfully on Vercel!' });
+});
+
 // Get all tasks
 router.get('/', async (req, res) => {
   try {
