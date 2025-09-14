@@ -1,24 +1,35 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const serverless = require('serverless-http');
 require('dotenv').config();
 
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Routes
 const taskRoutes = require('./src/routes/taskRoutes');
 app.use('/api/tasks', taskRoutes);
 
-const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://sunilsahani484_db_user:U8Gz73IyKoKg8AL7@cluster0.tdbruro.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+// MongoDB connection
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
+  return mongoose.connect(
+    process.env.MONGO_URI || "mongodb+srv://sunilsahani484_db_user:U8Gz73IyKoKg8AL7@cluster0.tdbruro.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
+};
 
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Connected to MongoDB');
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-  })
-  .catch(err => {
-    console.error('Failed to connect to MongoDB', err);
-    process.exit(1);
-  });
+connectDB()
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch((err) => console.error('❌ MongoDB connection error:', err));
+
+// ✅ Export app for Vercel
+module.exports = app;
+module.exports.handler = serverless(app);
