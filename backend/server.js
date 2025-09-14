@@ -16,20 +16,45 @@ app.use('/api/tasks', taskRoutes);
 
 // MongoDB connection
 const connectDB = async () => {
-  if (mongoose.connection.readyState >= 1) return;
-  return mongoose.connect(
-    process.env.MONGO_URI || "mongodb+srv://sunilsahani484_db_user:U8Gz73IyKoKg8AL7@cluster0.tdbruro.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    {
+  if (mongoose.connection.readyState >= 1) {
+    console.log('⚡ MongoDB already connected');
+    return;
+  }
+
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    }
-  );
+    });
+
+    console.log('✅ MongoDB connected successfully!');
+    console.log(`Host: ${conn.connection.host}`);
+    console.log(`Database: ${conn.connection.name}`);
+    console.log(`Port: ${conn.connection.port}`);
+  } catch (err) {
+    console.error('❌ MongoDB connection error:', err.message);
+    process.exit(1);
+  }
 };
 
-connectDB()
-  .then(() => console.log('✅ MongoDB connected'))
-  .catch((err) => console.error('❌ MongoDB connection error:', err));
+// Connect to DB
+connectDB();
 
-// ✅ Export app for Vercel
+// Test route
+app.get('/api/test', (req, res) => {
+  res.json({ message: '✅ Server is running!', time: new Date() });
+});
+
+// **Set port from environment variables**
+const PORT = process.env.PORT;
+
+// Start server only if not in serverless environment
+if (process.env.NODE_ENV !== 'serverless') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
+
+// Export for Vercel serverless
 module.exports = app;
 module.exports.handler = serverless(app);
