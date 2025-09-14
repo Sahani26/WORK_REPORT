@@ -30,6 +30,5 @@ connectDB()
   .then(() => console.log('✅ MongoDB connected'))
   .catch((err) => console.error('❌ MongoDB connection error:', err));
 
-// ✅ Export app for Vercel
-module.exports = app;
-module.exports.handler = serverless(app);
+// ✅ Only export handler for Vercel
+module.exports = serverless(app);
